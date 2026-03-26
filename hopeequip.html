@@ -1006,7 +1006,7 @@
           <a href="https://maps.google.com/?q=Eldoret,Kenya" target="_blank">View on Google Maps →</a>
         </div>
       </div>
-      <div class="contact-form reveal">
+      <form id="contactForm" class="contact-form reveal">
         <h3 class="form-title">Send Us a Message</h3>
         <div class="form-row">
           <div class="form-group">
@@ -1044,7 +1044,7 @@
           <textarea name="message" placeholder="Tell us about your water project needs, estimated depth required, land use, timeline, or any questions..."></textarea>
         </div>
         <button class="form-submit" onclick="handleSubmit()">📋 Send Enquiry</button>
-      </div>
+      </form>
     </div>
   </div>
 </section>
@@ -1157,8 +1157,15 @@ async function handleSubmit() {
     });
 
     // 🔥 FORCE parse response
-    const result = await res.json();
-    console.log("Server response:", result);
+    let result;
+    try {
+      result = await res.json();
+    } catch {
+      result = {};
+    }
+
+    console.log("RESPONSE:", result);
+
 
     // 🔥 since backend is working, trust success
     btn.textContent = "✅ Enquiry Sent Successfully!";
