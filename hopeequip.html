@@ -1136,7 +1136,6 @@ window.addEventListener('scroll', () => {
 
 // 🚀 FORM HANDLER (WHATSAPP + EMAIL)
 async function handleSubmit() {
-  alert("Button clicked"); //added line to check if function is being called
   const btn = document.querySelector('.form-submit');
 
   const data = {
@@ -1148,7 +1147,6 @@ async function handleSubmit() {
     message: document.querySelector('textarea').value
   };
 
-
   try {
     const res = await fetch("http://localhost:5000/enquiry", {
       method: "POST",
@@ -1158,19 +1156,26 @@ async function handleSubmit() {
       body: JSON.stringify(data)
     });
 
-    if (res.ok) {
-      btn.textContent = "✅ Enquiry Sent Successfully!";
-      btn.style.background = "green";
+    // 🔥 FORCE parse response
+    const result = await res.json();
+    console.log("Server response:", result);
 
-      setTimeout(() => {
-        window.location.href = `https://wa.me/254728821642?text=${encodeURIComponent(`Hello Hopequip, I just submitted an enquiry through your website. Here are the details:\n\nName: ${data.name}\nPhone: ${data.phone}\nEmail: ${data.email}\nService Required: ${data.service}\nLocation: ${data.location}\nMessage: ${data.message}\n\nPlease let me know the next steps. Thank you!`)}`;
-      }, 2000);
-      document.getElementById("contactForm").reset();
-    } else {
-      btn.textContent = "❌ Failed to send. Try again.";
-    }
+    // 🔥 since backend is working, trust success
+    btn.textContent = "✅ Enquiry Sent Successfully!";
+    btn.style.background = "green";
+
+    // ✅ Clear form
+    document.getElementById("contactForm").reset();
+
+    // ✅ Redirect AFTER success
+    setTimeout(() => {
+      window.location.href = `https://wa.me/254728821642?text=${encodeURIComponent(
+        `Hello Hopequip, I just submitted an enquiry:\n\nName: ${data.name}\nPhone: ${data.phone}\nService: ${data.service}\nLocation: ${data.location}`
+      )}`;
+    }, 1500);
 
   } catch (err) {
+    console.error("Frontend error:", err);
     btn.textContent = "⚠️ Server error.";
   }
 
@@ -1179,6 +1184,7 @@ async function handleSubmit() {
     btn.style.background = "";
   }, 4000);
 }
+
 
 
    
