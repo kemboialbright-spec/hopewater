@@ -1037,7 +1037,56 @@
         </div>
         <div class="form-group">
           <label>Location / County</label>
-          <input type="text" name="location" placeholder="Where is your project located?"/>
+          <select name="location">
+            <option value="">Select a county...</option>
+            <option>Baringo</option>
+            <option>Bomet</option>
+            <option>Bungoma</option>
+            <option>Busia</option>
+            <option>Elgeyo Marakwet</option>
+            <option>Embu</option>
+            <option>Garissa</option>
+            <option>Homabay</option>
+            <option>Isiolo</option>
+            <option>Kajiado</option>
+            <option>Kakamega</option>
+            <option>Kericho</option>
+            <option>Kiambu</option>
+            <option>Kiano</option>
+            <option>Kilifi</option>
+            <option>Kirinyaga</option>
+            <option>Kisii</option>
+            <option>Kisumu</option>
+            <option>Kitui</option>
+            <option>Kwale</option>
+            <option>Laikipia</option>
+            <option>Lamu</option>
+            <option>Machakos</option>
+            <option>Makueni</option>
+            <option>Mandera</option>
+            <option>Marsabit</option>
+            <option>Meru</option>
+            <option>Migori</option>
+            <option>Mombasa</option>
+            <option>Murang'a</option>
+            <option>Nairobi</option>
+            <option>Nakuru</option>
+            <option>Nandi</option>
+            <option>Narok</option>
+            <option>Nyamira</option>
+            <option>Nyeri</option>
+            <option>Samburu</option>
+            <option>Siaya</option>
+            <option>Taita Taveta</option>
+            <option>Tana River</option>
+            <option>Tharaka Nithi</option>
+            <option>Trans Nzoia</option>
+            <option>Turkana</option>
+            <option>Uasin Gishu</option>
+            <option>Vihiga</option>
+            <option>Wajir</option>
+            <option>West Pokot</option>
+          </select>
         </div>
         <div class="form-group">
           <label>Message</label>
@@ -1167,19 +1216,16 @@ async function handleSubmit() {
     console.log("RESPONSE:", result);
 
 
-    // 🔥 since backend is working, trust success
+    // ✅ Success message
     btn.textContent = "✅ Enquiry Sent Successfully!";
     btn.style.background = "green";
 
-    // ✅ Clear form
-    document.getElementById("contactForm").reset();
-
-    // ✅ Redirect AFTER success
+    // ✅ Clear form after 2 seconds
     setTimeout(() => {
-      window.location.href = `https://wa.me/254728821642?text=${encodeURIComponent(
-        `Hello Hopequip, I just submitted an enquiry:\n\nName: ${data.name}\nPhone: ${data.phone}\nService: ${data.service}\nLocation: ${data.location}`
-      )}`;
-    }, 3000);
+      document.getElementById("contactForm").reset();
+      btn.textContent = "📋 Send Enquiry";
+      btn.style.background = "";
+    }, 2000);
 
   } catch (err) {
     console.error("Frontend error:", err);
