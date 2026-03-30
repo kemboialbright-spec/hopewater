@@ -1188,13 +1188,19 @@ async function handleSubmit() {
   const btn = document.querySelector('.form-submit');
 
   const data = {
-    name: document.querySelector('input[placeholder="Your full name"]').value,
-    phone: document.querySelector('input[type="tel"]').value,
-    email: document.querySelector('input[type="email"]').value,
-    service: document.querySelector('select').value,
-    location: document.querySelector('input[placeholder="Where is your project located?"]').value,
-    message: document.querySelector('textarea').value
+    name: document.querySelector('input[placeholder="Your full name"]').value.trim(),
+    phone: document.querySelector('input[type="tel"]').value.trim(),
+    email: document.querySelector('input[type="email"]').value.trim(),
+    service: document.querySelector('select[name="service"]').value.trim(),
+    location: document.querySelector('select[name="location"]').value.trim(),
+    message: document.querySelector('textarea').value.trim()
   };
+
+  // ✅ Validate all fields are filled
+  if (!data.name || !data.phone || !data.email || !data.service || !data.location || !data.message) {
+    alert("⚠️ Please fill in all fields before submitting.");
+    return;
+  }
 
   try {
     const res = await fetch("http://localhost:5000/enquiry", {
